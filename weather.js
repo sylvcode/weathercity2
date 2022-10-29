@@ -1,24 +1,18 @@
 const axios = require("axios");
+const cityArray = ["Frankfurt", "Maimi"];
+const APIKey = "43700ee73704d4a7a92f7aa11e986149";
 
-function WeatherAPI() {
-  this.baseUrl = "http://api.openweathermap.org/data/2.5/forecast?";
-  this.APIKey = "43700ee73704d4a7a92f7aa11e986149";
-}
+const getCoordinates = async (city) => {
+  const result = {};
+  const response = await axios.get(
+    `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${APIKey}`
+  );
+  result.longtitude = response.data[0].lon;
+  result.latitude = response.data[0].lat;
 
-WeatherAPI.prototype.fetchData = async function (location, countryCode, date) {
-  let response = null,
-    req = util.format(
-      "%sq=%s,%s&units=metric&APPID=%s",
-      this.baseUrl,
-      location,
-      countryCode,
-      this.APIKey
-    );
-
-  try {
-    response = await axios.get(req, { timeout: 2000 });
-    return reponse;
-  } catch (e) {
-    throw Error("API call error");
-  }
+  return result;
 };
+
+cityArray.forEach((city) =>
+  getCoordinates(city).then((cordinates) => console.log(cordinates))
+);
