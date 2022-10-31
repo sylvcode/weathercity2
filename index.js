@@ -7,15 +7,24 @@ async function asyncReadFile(citiesFile) {
 
     const arr = contents.split(/\r?\n/);
 
-    console.log(arr);
-
     return arr;
   } catch (err) {
     console.log(err);
   }
 }
+function logAll(cities) {
+  console.log(cities);
+}
 
-asyncReadFile("./cities.txt").then(() => console.log("done"));
+function getBobby() {
+  return "Bobby";
+}
+let person = getBobby;
+let person2 = getBobby();
+
+console.log(person);
+console.log(person2);
+asyncReadFile("./cities.txt").then(logAll);
 
 // const love = { heart: "yes", mind: "no" };
 // const { heart } = love;
